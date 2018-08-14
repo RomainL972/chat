@@ -1,0 +1,171 @@
+body{
+	/*background-color: blue;*/
+}
+
+html{
+	overflow: hidden;
+	font-family: sans-serif,helvetica;
+font-weight: 100;
+}
+
+/***title***/
+
+#title_conv{
+	text-align: center;
+	font-weight: 100;
+	font-size: 1.5em;
+}
+.status_connect{
+	position: relative;
+	top: -0.1em;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 5px;
+	font-size: 0.7em;
+}
+.connect{
+	border: solid 1px green;
+	color: green;
+}
+.disconnect{
+	border: solid 1px rgb(189, 0, 0);
+	color: rgb(189, 0, 0);
+}
+.connect:before{
+	content: 'connecté';
+}
+.disconnect::before{
+	content: 'déconnecté';
+}
+
+/***end_title***/
+
+/*** global_box ***/
+
+#global_box{
+	background-color: ghostwhite;
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	max-width: 700px;
+	border: solid 1px;
+}
+
+#button_box, .sender div{
+	color: white;
+	background-color: rgb(156, 199, 243);
+}
+
+/**msg_box**/
+
+#msg_box ul{
+	list-style: none;
+	margin: 0;
+	padding: 15px;
+	max-height: 70vh;
+	overflow-y: auto;
+	position: relative;
+	font-size: 1em;
+}
+.sender{
+	width: 100%;
+	float: right;
+}
+.sender div{
+	float: right;
+}
+.recever div{
+	background-color: rgba(128, 128, 128, 0.17);
+	float: left;
+}
+.sender div,.recever div{
+	max-width: 200px;
+	margin: 5px;
+	padding: 6px;
+	border-radius: 13px;
+}
+.sender em,.recever em{
+	color: rgb(136, 136, 136);
+	font-size: 0.7em;
+	float: right;
+	margin-right: 3px;
+	width: 100%;
+}
+.sender em{
+	text-align: right;
+}
+.recever{
+	width: 100%;
+	float: left;
+}
+.typing{
+	color: gray;
+	font-style: italic;
+}
+.date{
+text-align: center;
+font-style: italic;
+color: gray;
+font-size: 0.7em;
+list-style: none;
+margin-bottom: 15px;
+}
+.date span{
+	border: solid 1px;
+padding: 5px;
+border-radius: 5px;
+}
+
+/**end_msg_box**/
+
+/**text_box**/
+
+#text_box{
+	width: 100%;
+	display: flex;
+	flex-direction: inherit;
+	justify-content: center;
+	border-top: solid 1px rgba(128, 128, 128, 0.47);
+	border-radius: 10px;
+}
+#text_box:focus{
+	outline-offset: -2px;
+outline-color: -webkit-focus-ring-color;
+outline-style: auto;
+outline-width: 5px;
+}
+#input_box{
+	-webkit-appearance: none;
+	border: none;
+	margin: 0;
+	padding: 10px;
+	display: block;
+	width: 100%;
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px 0px 0px 10px;
+	font-size: 20px;
+	font-size: 1em;
+	font-weight: 100;
+}
+
+#input_box:focus{
+	outline: none;
+}
+#button_box{
+	border: none;
+	margin: 0;
+	border-radius: 0px 10px 10px 0px;
+	width: 90px;
+	font-size: 1em;
+	font-weight: 100;
+	transition: 0.5s;
+}
+#button_box:hover{
+	background-color: rgb(143, 183, 223);
+	color: white;
+}
+
+/**end_text_box**/
+
+/****end_global_box****/

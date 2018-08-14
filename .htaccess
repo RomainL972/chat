@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Chat Romain-Louis"
+AuthUserFile /var/www/chat/secure/htpasswd
+Require valid-user
