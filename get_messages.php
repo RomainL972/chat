@@ -1,28 +1,21 @@
 <?php
-if (!isset($_POST["mode"])) {
-	header("HTTP/1.0 200 OK");
-}
-$messages = [
-	[
-		"user" => "louis",
-		"message" => "Salut Romain",
-		"time" => 1534232700
-	],
-	[
-		"user" => "romain",
-		"message" => "Salut Louis, ça va?",
-		"time" => 1534232760
-	],
-	[
-		"user" => "louis",
-		"message" => "Oui",
-		"time" => 1534232820
-	],
-	[
-		"user" => "louis",
-		"message" => "Je suis content",
-		"time" => 1534232820
-	]
-];
 
-echo json_encode($messages);
+sql_connect();
+
+function sql_connect()
+{
+	$mysqli = new mysqli(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASS"), "chat");
+	$now =time();
+
+	if ($mysqli->connect_error) {
+		die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+	}
+	if($stmt = $mysqli->query('SELECT message, user, `time` FROM messages')) {
+		$array[0] = $stmt->fetch_all(MYSQLI_ASSOC);
+		$array[1] = $_SERVER["PHP_AUTH_USER"];
+		echo json_encode($array);
+	}
+	else
+		die("Error : " . $mysqli->error);
+
+}

@@ -2,12 +2,10 @@ params  = ""
 request = new XMLHttpRequest()
 request.open("POST", "get_messages.php", true)
 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-// request.setRequestHeader("Content-length", params.length)
-// request.setRequestHeader("Connection", "close")
+user = ""
 
 days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-user = "romain"
        
 request.onreadystatechange = function()
 {
@@ -29,14 +27,13 @@ request.send(params)
 
 function display_messages(messages) {
     messages = JSON.parse(messages)
-    messages.forEach(parse_message)
+    console.log(messages)
+    user = messages[1]
+    messages[0].forEach(parse_message)
 }
 
 function parse_message(message, index) {
-    // newTime = ""
-    UTCDate = new Date(message["time"]*1000)
-    date = new Date(Date.UTC(UTCDate.getFullYear(), UTCDate.getMonth(), UTCDate.getDate(), UTCDate.getHours(), UTCDate.getMinutes(), UTCDate.getSeconds(), UTCDate.getMilliseconds()))
-    console.log(date)
+    date = new Date(message["time"]*1000)
     if (index == 0) {
         this.currentDay = [date.getDate(), date.getMonth(), date.getFullYear()]
         day = currentDay
@@ -50,20 +47,24 @@ function parse_message(message, index) {
         time = [date.getHours(), date.getMinutes()]
     }
     if (!currentDay.equals(day)) {
+        dayChanged = 1
         new_date(date)
         currentDay = day
     }
+    else
+        dayChanged = 0
 
     if(user == message["user"])
         msgClass = "sender"
     else
         msgClass = "recever"
 
-    console.log(currentTime.equals(time))
-    if(!currentTime.equals(time)) {
-        newTime = "<em>" + date.getHours() + ":" + date.getMinutes() + "</em>"
-        currentTime = time
+    if (currentTime.equals(time) && O("scroll_box").lastChild.className == msgClass && !dayChanged) {
+        O("scroll_box").lastChild.lastChild.remove()
     }
+    currentTime = time
+
+    newTime = "<em>" + date.getHours() + ":" + date.getMinutes() + "</em>"
 
     O("scroll_box").innerHTML += "<li class='" + msgClass + "'><div><span>" + message["message"] + "</span></div>"  + newTime + "</li>"
 }

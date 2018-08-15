@@ -17,10 +17,10 @@
 				
 			</ul>
 		</section>
-		<section id="text_box" class="child_box">
-			<input id="input_box" type="" name="">
-			<button id="button_box" >⥣</button>
-		</section>
+		<form action="send_message.php" id="text_box" class="child_box" method="post">
+			<input id="input_box" name="message">
+			<input type="submit" id="button_box" value="⥣">
+		</form>
 	</section>
 	<script>
 		var elDiv =document.getElementById("scroll_box");
