@@ -17,12 +17,15 @@ function sql_connect()
 		$stmt->execute();
 
 		$result = $stmt->get_result();
-
 	}
 	else {
 		$result = $mysqli->query($query);
 	}
 	$array[0] = $result->fetch_all(MYSQLI_ASSOC);
+	// foreach ($array[0] as $msg) {
+	// 	echo htmlspecialchars($msg["message"]) . "\n";
+	// }
 	$array[1] = $_SERVER["PHP_AUTH_USER"];
+	// die(print_r($array));
 	echo json_encode($array);
 }

@@ -84,3 +84,15 @@ Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 function O(i) { return typeof i == 'object' ? i : document.getElementById(i) }
 function S(i) { return O(i).style                                            }
 function C(i) { return document.getElementsByClassName(i)                    }
+
+function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}

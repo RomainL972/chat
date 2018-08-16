@@ -56,7 +56,7 @@ function parse_message(message, index, mode) {
 
     newTime = "<em>" + date.getHours() + ":" + date.getMinutes() + "</em>"
 
-    O("scroll_box").innerHTML += "<li class='" + msgClass + "' id='" + message["id"] + "'><div><span>" + message["message"] + "</span></div>"  + newTime + "</li>"
+    O("scroll_box").innerHTML += "<li class='" + msgClass + "' id='" + message["id"] + "'><div><span>" + escapeHtml(message["message"]) + "</span></div>"  + newTime + "</li>"
 }
 
 function new_date(date) {
@@ -64,5 +64,9 @@ function new_date(date) {
 }
 
 function reload() {
-    ajax("/get_messages.php", "id=" + O("scroll_box").lastChild.id, get_messages)
+    if (O("scroll_box").hasChildNodes())
+        id = O("scroll_box").lastChild.id
+    else
+        id = 0
+    ajax("/get_messages.php", "id=" + id, get_messages)
 }
