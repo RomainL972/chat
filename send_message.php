@@ -1,16 +1,19 @@
 <?php
 if (!isset($_POST["message"])) {
-	header("HTTP/1.0 400 Bad Request");
-	die("There is no message");
+	header("HTTP/1.0 400 No Message");
+	die();
 }
 if (empty($_POST["message"])) {
-	header("Location: /index.php?error=1");
+	header("HTTP/1.0 400 Empty message");
+	die();
 }
 if (strlen($_POST["message"]) > 50) {
-	header("Location: /index.php?error=2");
+	header("HTTP/1.0 400 Message too long");
+	die();
 }
 if (strlen($_SERVER["PHP_AUTH_USER"]) > 20) {
-	header("Location: /index.php?error=3");
+	header("HTTP/1.0 400 Username too long");
+	die();
 }
 
 sql_connect();
@@ -28,8 +31,9 @@ function sql_connect()
 
 		$stmt->execute();
 	}
-	else
+	else {
+		header("HTTP/1.0 500");
 		die("Error : " . $mysqli->error);
-
-	header("Location: /index.php");
+	}
+	// header("Location: /index.php");
 }

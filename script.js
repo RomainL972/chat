@@ -29,6 +29,7 @@ function get_messages(messages) {
 
 function send_message() {
     $.post('send_message.php','message='+$('#input_box').val())
+    $("#input_box").val("")
 }
 
 function parse_message(message, index, mode) {

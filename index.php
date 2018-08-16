@@ -17,10 +17,10 @@
 		<section id="msg_box" class="child_box">
 			<ul id="scroll_box"></ul>
 		</section>
-		<section id="text_box" class="child_box">
+		<form action="#" id="text_box" class="child_box">
 			<input id="input_box">
-			<button id="button_box" onclick="send_message()">⥣</button>
-		</section>
+			<input type="submit" id="button_box" onclick="send_message()" value="⥣">
+		</form>
 	</section>
 </body>
 </html>
