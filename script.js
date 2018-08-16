@@ -3,8 +3,10 @@ user = ""
 days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
-ajax("/get_messages.php", "", get_messages)
-window.setInterval(reload, 5000)
+
+$(function() {
+    $.post("/get_messages.php", get_messages)
+});
 
 function get_messages(messages) {
     messages = JSON.parse(messages)
@@ -20,6 +22,13 @@ function get_messages(messages) {
 
     if(goDown)
         elDiv.scrollTop = elDiv.scrollHeight-elDiv.offsetHeight;
+
+    id = "id=" + ((elDiv.hasChildNodes()) ? O("scroll_box").lastChild.id : 0)
+    $.post("/get_messages.php", id, get_messages)
+}
+
+function send_message() {
+    $.post('send_message.php','message='+$('#input_box').val())
 }
 
 function parse_message(message, index, mode) {
@@ -63,10 +72,10 @@ function new_date(date) {
     O("scroll_box").innerHTML += "<li class='date'><br><span>" + days[date.getDay()] + " " + date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear()
 }
 
-function reload() {
-    if (O("scroll_box").hasChildNodes())
-        id = O("scroll_box").lastChild.id
-    else
-        id = 0
-    ajax("/get_messages.php", "id=" + id, get_messages)
-}
+// function reload() {
+//     if (O("scroll_box").hasChildNodes())
+//         id = O("scroll_box").lastChild.id
+//     else
+//         id = 0
+//     ajax("/get_messages.php", "id=" + id, get_messages)
+// }

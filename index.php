@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<title>Chat Louis-Romain</title>
+	<script src="jquery-3.3.1.min.js"></script>
 	<script src="utils.js"></script>
 	<script src="script.js"></script>
 </head>
@@ -16,10 +17,10 @@
 		<section id="msg_box" class="child_box">
 			<ul id="scroll_box"></ul>
 		</section>
-		<form action="send_message.php" id="text_box" class="child_box" method="post">
-			<input id="input_box" name="message">
-			<input type="submit" id="button_box" value="⥣">
-		</form>
+		<section id="text_box" class="child_box">
+			<input id="input_box">
+			<button id="button_box" onclick="send_message()">⥣</button>
+		</section>
 	</section>
 </body>
 </html>

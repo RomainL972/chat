@@ -1,6 +1,9 @@
 <?php
 
-sql_connect();
+while (sql_connect() != 1) {
+	sleep(0.1);
+}
+// sql_connect();
 
 function sql_connect()
 {
@@ -22,10 +25,13 @@ function sql_connect()
 		$result = $mysqli->query($query);
 	}
 	$array[0] = $result->fetch_all(MYSQLI_ASSOC);
+	if(!$array[0])
+		return 0;
 	// foreach ($array[0] as $msg) {
 	// 	echo htmlspecialchars($msg["message"]) . "\n";
 	// }
 	$array[1] = $_SERVER["PHP_AUTH_USER"];
 	// die(print_r($array));
 	echo json_encode($array);
+	return 1;
 }
