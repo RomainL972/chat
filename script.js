@@ -6,6 +6,7 @@ months = ["Janvier", "F√©vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao√
 
 $(function() {
     $.post("/get_messages.php", get_messages)
+    $("#text_box").submit(send_message);
 });
 
 function get_messages(messages) {
@@ -27,9 +28,10 @@ function get_messages(messages) {
     $.post("/get_messages.php", id, get_messages)
 }
 
-function send_message() {
+function send_message(e) {
     $.post('send_message.php','message='+$('#input_box').val())
     $("#input_box").val("")
+    return false
 }
 
 function parse_message(message, index, mode) {

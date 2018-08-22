@@ -17,9 +17,9 @@
 		<section id="msg_box" class="child_box">
 			<ul id="scroll_box"></ul>
 		</section>
-		<form action="#" id="text_box" class="child_box">
+		<form id="text_box" class="child_box" method="post">
 			<input id="input_box">
-			<input type="submit" id="button_box" onclick="send_message()" value="⥣">
+			<input type="submit" id="button_box" value="⥣">
 		</form>
 	</section>
 </body>
