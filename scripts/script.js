@@ -7,6 +7,7 @@ months = ["Janvier", "F√©vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao√
 $(function() {
     $.post("/get_messages.php", get_messages)
     $("#text_box").submit(send_message);
+    
 
     document.addEventListener( "contextmenu", function(e) {
     console.log(e);
@@ -14,7 +15,6 @@ $(function() {
 });
 
 function get_messages(messages) {
-    console.log("lol")
     messages = JSON.parse(messages)
     var elDiv =O("scroll_box");
     user = messages[1]
@@ -31,6 +31,9 @@ function get_messages(messages) {
 
     id = "id=" + ((elDiv.hasChildNodes()) ? O("scroll_box").lastChild.id : 0)
 
+    $('.sender, .recever').linkify({
+        target: "_blank"
+    });
     Hyphenator.run()
 
     $.post("/get_messages.php", id, get_messages)
