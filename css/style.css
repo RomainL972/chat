@@ -169,3 +169,11 @@ outline-width: 5px;
 /**end_text_box**/
 
 /****end_global_box****/
+
+.hyphenate{
+	hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto;
+}
+
+.donthyphenate{
+	hyphens: none; -webkit-hyphens: none; -moz-hyphens: none; -ms-hyphens: none;
+}

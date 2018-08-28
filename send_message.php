@@ -7,7 +7,7 @@ if (empty($_POST["message"])) {
 	header("HTTP/1.0 400 Empty message");
 	die();
 }
-if (strlen($_POST["message"]) > 50) {
+if (strlen($_POST["message"]) > 500) {
 	header("HTTP/1.0 400 Message too long");
 	die();
 }

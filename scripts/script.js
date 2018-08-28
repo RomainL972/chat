@@ -7,14 +7,19 @@ months = ["Janvier", "FÃ©vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "AoÃ
 $(function() {
     $.post("/get_messages.php", get_messages)
     $("#text_box").submit(send_message);
+
+    document.addEventListener( "contextmenu", function(e) {
+    console.log(e);
+  });
 });
 
 function get_messages(messages) {
+    console.log("lol")
     messages = JSON.parse(messages)
     var elDiv =O("scroll_box");
     user = messages[1]
 
-    if(!elDiv.hasChildNodes() || elDiv.scrollTop == elDiv.scrollHeight-elDiv.offsetHeight)
+    if(!elDiv.hasChildNodes() || elDiv.scrollTop >= elDiv.scrollHeight-elDiv.offsetHeight)
         goDown = 1
     else
         goDown = 0
@@ -25,6 +30,9 @@ function get_messages(messages) {
         elDiv.scrollTop = elDiv.scrollHeight-elDiv.offsetHeight;
 
     id = "id=" + ((elDiv.hasChildNodes()) ? O("scroll_box").lastChild.id : 0)
+
+    Hyphenator.run()
+
     $.post("/get_messages.php", id, get_messages)
 }
 
@@ -68,7 +76,7 @@ function parse_message(message, index, mode) {
 
     newTime = "<em>" + date.getHours() + ":" + date.getMinutes() + "</em>"
 
-    O("scroll_box").innerHTML += "<li class='" + msgClass + "' id='" + message["id"] + "'><div><span>" + escapeHtml(message["message"]) + "</span></div>"  + newTime + "</li>"
+    O("scroll_box").innerHTML += "<li class='" + msgClass + " hyphenate' id='" + message["id"] + "'><div><span>" + escapeHtml(message["message"]) + "</span></div>"  + newTime + "</li>"
 }
 
 function new_date(date) {
