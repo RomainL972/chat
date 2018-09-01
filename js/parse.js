@@ -3,12 +3,14 @@ var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", 
 
 function parseMessage(message, index) {
     date = new Date(message["time"]*1000)
-    if (!O("scroll_box").hasChildNodes()) {
+    main = O("scroll_box")
+    if (!main.hasChildNodes()) {
         this.currentDay = [date.getDate(), date.getMonth(), date.getFullYear()]
         day = currentDay
         this.currentTime = [date.getHours(), date.getMinutes()]
         time = currentTime
         newDate(date)
+        last = ""
     }
     else {
         day = [date.getDate(), date.getMonth(), date.getFullYear()]
@@ -27,8 +29,9 @@ function parseMessage(message, index) {
     else
         msgClass = "recever"
 
-    if (currentTime.equals(time) && O("scroll_box").lastChild.className.includes(msgClass) && !dayChanged) {
-        O("scroll_box").lastChild.lastChild.remove()
+
+    if (index && currentTime.equals(time) && last.className.includes(msgClass) && !dayChanged) {
+        last.lastChild.remove()
     }
     currentTime = time
 
@@ -45,6 +48,8 @@ function parseMessage(message, index) {
         O("scroll_box").insertBefore(li, first)
     else
         O("scroll_box").appendChild(li)
+
+    last = li
 }
 
 function newDate(date) {

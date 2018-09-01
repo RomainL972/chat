@@ -37,8 +37,6 @@ function getMessages(messages) {
     }
     
     messages[0].reverse()
-
-
     messages[0].forEach(parseMessage)
 
     if(goDown)
