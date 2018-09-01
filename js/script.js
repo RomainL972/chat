@@ -31,8 +31,10 @@ function getMessages(messages) {
     else
         goDown = 0
 
-    if(mode)
+    if(mode) {
         first = elDiv.firstChild
+        height = elDiv.scrollHeight
+    }
     
     messages[0].reverse()
 
@@ -41,6 +43,9 @@ function getMessages(messages) {
 
     if(goDown)
         elDiv.scrollTop = elDiv.scrollHeight-elDiv.offsetHeight;
+    if(mode)
+        elDiv.scrollTop = elDiv.scrollHeight-height
+
 
     id = "id=" + ((elDiv.hasChildNodes()) ? O("scroll_box").lastChild.id : 0)
 

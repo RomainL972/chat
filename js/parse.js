@@ -27,7 +27,7 @@ function parseMessage(message, index) {
     else
         msgClass = "recever"
 
-    if (currentTime.equals(time) && O("scroll_box").lastChild.className == msgClass && !dayChanged) {
+    if (currentTime.equals(time) && O("scroll_box").lastChild.className.includes(msgClass) && !dayChanged) {
         O("scroll_box").lastChild.lastChild.remove()
     }
     currentTime = time
