@@ -20,7 +20,7 @@ sql_connect();
 
 function sql_connect()
 {
-	$mysqli = new mysqli(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASS"), "chat");
+	$mysqli = new mysqli(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASS"), getenv("DATABASE"));
 	$now =time();
 
 	if ($mysqli->connect_error) {

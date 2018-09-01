@@ -5,11 +5,12 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>Chat Louis-Romain</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="scripts/Hyphenator_Loader.js"></script>
-	<script src="scripts/linkify.min.js"></script>
-	<script src="scripts/linkify-jquery.min.js"></script>
-	<script src="scripts/utils.js"></script>
-	<script src="scripts/script.js"></script>
+	<script src="js/Hyphenator_Loader.js"></script>
+	<script src="js/linkify.min.js"></script>
+	<script src="js/linkify-jquery.min.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/parse.js"></script>
+	<script src="js/script.js"></script>
 </head>
 <body>
 	<!-- <h1 id="title_conv">
