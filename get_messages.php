@@ -14,7 +14,7 @@ function sql_connect()
 	}
 
 	//Define the SQL query
-	$query = "SELECT * FROM messages";
+	$query = "SELECT id, `from` AS user, message, `time` FROM messages";
 	if(isset($_POST["mode"]))
 		$query .= " WHERE id < ?";
 	else if(isset($_POST["id"]))

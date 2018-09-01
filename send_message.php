@@ -26,7 +26,7 @@ function sql_connect()
 	if ($mysqli->connect_error) {
 		die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 	}
-	if($stmt = $mysqli->prepare('INSERT INTO messages (`message`, `user`, `time`) VALUES (?, ?, ?)')) {
+	if($stmt = $mysqli->prepare('INSERT INTO messages (`message`, `from`, `time`) VALUES (?, ?, ?)')) {
 		$stmt->bind_param("ssi", $_POST["message"], $_SERVER["PHP_AUTH_USER"], $now);
 
 		$stmt->execute();
