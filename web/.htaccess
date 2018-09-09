@@ -1,0 +1,8 @@
+AuthType Basic
+AuthName "Chat Romain-Louis"
+AuthUserFile /var/www/htpasswd
+Require valid-user
+RewriteEngine	On
+RewriteRule		^public/(.*)$			public/$1		[L]
+RewriteRule		^adminer.php(.*)$		adminer.php$1	[L]
+RewriteRule		^.*$					dispatcher.php
