@@ -7,7 +7,9 @@ class DefaultController
 	
 	function GET()
 	{
-		echo <<<_END
+		global $content_type;
+		$content_type = "text/html";
+		return <<<_END
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,6 +20,7 @@ class DefaultController
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  	<script src="public/js/socket.io.js"></script>
 	<script src="public/js/Hyphenator_Loader.js"></script>
 	<script src="public/js/linkify.min.js"></script>
 	<script src="public/js/linkify-jquery.min.js"></script>

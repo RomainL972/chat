@@ -2,87 +2,89 @@
 
 class MessagesController
 {
-	private $mysqli/*, $context, $socket*/;
+	private $mysqli, $context, $socket;
 
 	function __construct()
 	{
 		$this->mysqli = sql_connect();
-		// $this->$context = new ZMQContext();
-  //   	$this->$socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
-  //   	$this->$socket->connect("tcp://localhost:5555");
 	}
 
 	function GET(){
 		global $data;
 		$user = $_SERVER["PHP_AUTH_USER"];
-		if(empty($data["other"]))
-			error(200, "No other person specified");
 
-		// $params = array($user, $data["other"], $data["other"], $user);
-		// $query = "SELECT id, `from`, `text`, `time` FROM messages WHERE ((`from`=? AND `to`=?) OR (`from`=? AND `to`=?))";
+		//Check for errors in query
+		if(empty($data["room"]))
+			error(400, "No room specified");
+		if(!empty($data["before"]) && !empty($data["after"]))
+			error(400, "Before and After can't be specified and the same time");
+		if(!empty($data["before"]) && (empty($data["id"]) || !empty($data["time"])))
+			error(400, "Before can only and must go with id");
 
-		// if(!empty($data["before"])) {
-		// 	$query .= " AND id < ?";
-		// 	$params[4] = $data["before"];
-		// }
+		//Init query and args
+		$query = "SELECT id, `from`, text, created_at, changed, created_at, modified_at FROM messages WHERE room=?";
+		$args = array($data["room"]);
 
-		// $query .= " ORDER by id DESC LIMIT 20";
+		//Set condition sign
+		if(!empty($data["before"]))
+			$sign = "<";
+		elseif (!empty($data["after"]))
+			$sign = ">";
 
-		// $result = sql_query($this->mysqli, $query, $params);
-
-		// $data = $result->fetch_all(MYSQLI_ASSOC);
-		// $json = array("new" => $data);
-		// $result->close();
-
-		$query = "SELECT id, `from`, `time`, `change`, `text` FROM messages WHERE ((`from`=? AND `to`=?) OR (`from`=? AND `to`=?))";
-		$params = array($user, $data["other"], $data["other"], $user);
-		if(!empty($data["lastCheck"])) {
-			$query .= " AND last_modified > ?";
-			$params[] = date("Y-m-d H:i:s",$data["lastCheck"]);
+		//Add conditions
+		if(!empty($data["id"])) {
+			$query .= " AND id $sign ?";
+			$args[] = $data["id"];
 		}
-		// die(print_r($params,1));
+		if(!empty($data["time"])) {
+			$query .= " AND time $sign ?";
+			$args[] = $data["time"];
+		}
 
-		$result = sql_query($this->mysqli, $query, $params);
-		$data = $result->fetch_all(MYSQLI_ASSOC);
-		$json = $data;
+		$result = sql_query($this->mysqli, $query, $args);
+
+		$json = $result->fetch_all(MYSQLI_ASSOC);
 		$result->close();
-		
 
-		echo json_encode($json);
+		return json_encode($json);
 	}
 
 	function POST(){
 		global $data;
-		$from = $_SERVER["PHP_AUTH_USER"];
-		if(empty($data["text"]))
-			error(200, "No message");
-		if(strlen($data["text"]) > 500)
-			error(200, "Message too long");
-		if(empty($data["to"]))
-			error(200, "No recipient");
+		$user = $_SERVER["PHP_AUTH_USER"];
 
-		$result = sql_query($this->mysqli, "INSERT INTO messages(`from`, `to`, `text`) VALUES (?, ?, ?)", array($from, $data["to"], $data["text"]));
-		// $socket->send(array(""))
-		die(print_r($result));
+		//Check for errors in request
+		if(empty($data["text"]))
+			error(400, "No message");
+		if(strlen($data["text"]) > 500)
+			error(400, "Message too long");
+		if(empty($data["room"]))
+			error(400, "No room");
+
+		sql_query($this->mysqli, "INSERT INTO messages(`from`, room_id, text) VALUES (?, ?, ?)", array($user, $data["room"], $data["text"]))->close();
 	}
 
 	function PATCH(){
-		$from = $_SERVER["PHP_AUTH_USER"];
+		$user = $_SERVER["PHP_AUTH_USER"];
 		global $data;
-		if(empty($data["id"]))
-			error(200, "No ID");
-		if(empty($data["text"]))
-			error(200, "No text");
 
-		$result = sql_query($this->mysqli, "UPDATE messages SET `text`=?, `change`=1 WHERE id=? AND `from`=?", array($data["text"], $data["id"], $from));
+		//Check for errors in request
+		if(empty($data["id"]))
+			error(400, "No ID");
+		if(empty($data["text"]))
+			error(400, "No text");
+
+		sql_query($this->mysqli, "UPDATE messages SET text=?, changed=1 WHERE id=? AND `from`=?", array($data["text"], $data["id"], $user))->close();
 	}
 
 	function DELETE(){
-		$from = $_SERVER["PHP_AUTH_USER"];
+		$user = $_SERVER["PHP_AUTH_USER"];
 		global $data;
-		if(empty($data["id"]))
-			error(200, "No ID");
 
-		$result = sql_query($this->mysqli, "UPDATE messages SET `text`='', `change`=2 WHERE id=? AND `from`=?", array($data["id"], $from));
+		//Check for errors in request
+		if(empty($data["id"]))
+			error(400, "No ID");
+
+		sql_query($this->mysqli, "UPDATE messages SET text='', changed=1 WHERE id=? AND `from`=?", array($data["id"], $user))->close();
 	}
 }

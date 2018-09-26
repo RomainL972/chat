@@ -26,17 +26,16 @@ function sql_query($mysqli, $query, $params=array())
 		}
 
 		array_unshift($params, $types);
-		// echo $query;
 
 		$stmt = $mysqli->prepare($query);
-		// die(print_r($params, true));
 		$stmt->bind_param(...$params);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		
 		$stmt->close();
-		// die(print_r($result, 1));
 
+		if($mysqli->errno)
+			error(500, $mysqli->error);
 		return $result;
 	}
 	catch(Exception $e) {
